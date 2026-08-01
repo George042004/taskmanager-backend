@@ -66,7 +66,8 @@ async function getdatafun(req,res){
 
 async function updatepass(req,res){
 
-    const email = req.users.email 
+    const email = req.user.email
+    console.log(email)
     const {oldpass,newpass} = req.body
     const userexist = await Users.findOne({email})
     const passexist = await bcrypt.compare(oldpass,userexist.password)
