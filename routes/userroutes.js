@@ -7,6 +7,6 @@ const router = express.Router()
 router.post('/register',usercontrollers.register)
 router.post('/login',usercontrollers.login)
 router.get('/getdata',auth,usercontrollers.getdatafun)
-
+router.put('/updatepass',auth,usercontrollers.updatepass)
 
 module.exports = router

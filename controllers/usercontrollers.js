@@ -64,5 +64,21 @@ async function getdatafun(req,res){
     return res.json({status:false, message:"something went wrong!"})
 }
 
+async function updatepass(req,res){
 
-module.exports = {register, login, getdatafun}
+    const email = req.users.email 
+    const {oldpass,newpass} = req.body
+    const userexist = await Users.findOne({email})
+    const passexist = await bcrypt.compare(oldpass,userexist.password)
+    if(!passexist)
+    {
+        return res.json({status:false,message:"password is incorrect!"})
+    }
+
+    const hashedpass = await bcrypt.hash(newpass,10)
+    await Users.findOneAndUpdate({email},{$set:{password:hashedpass}})
+    return res.json({status:true,message:"password updated!"})
+}
+
+
+module.exports = {register, login, getdatafun, updatepass}
